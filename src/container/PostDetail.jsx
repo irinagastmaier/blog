@@ -1,3 +1,5 @@
+import styles from "./Posts.module.scss";
+
 async function fetchComments(postId) {
   const response = await fetch(
     `https://jsonplaceholder.typicode.com/comments?postId=${postId}`
@@ -26,16 +28,19 @@ export function PostDetail({ post }) {
   const data = [];
 
   return (
-    <>
+    <div className={styles.container}>
       <h3 style={{ color: "blue" }}>{post.title}</h3>
-      <button>Delete</button> <button>Update title</button>
+      <div>
+        <button className={styles.btn}>Delete</button>
+        <button className={styles.btn}>Update title</button>
+      </div>
       <p>{post.body}</p>
       <h4>Comments</h4>
-      {data.map((comment) => (
+      {data.map(comment => (
         <li key={comment.id}>
           {comment.email}: {comment.body}
         </li>
       ))}
-    </>
+    </div>
   );
 }

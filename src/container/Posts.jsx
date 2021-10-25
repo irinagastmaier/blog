@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useQuery } from "react-query";
 import { PostDetail } from "./PostDetail";
+import styles from "./Posts.module.scss";
 
 const maxPostPage = 10;
 
@@ -19,29 +20,29 @@ export function Posts() {
   if (!data) return <div />;
 
   return (
-    <>
+    <div className={styles.container}>
       <ul>
         {data.map(post => (
           <li
             key={post.id}
-            className='post-title'
+            className={styles.title}
             onClick={() => setSelectedPost(post)}
           >
             {post.title}
           </li>
         ))}
       </ul>
-      <div className='pages'>
-        <button disabled onClick={() => {}}>
-          Previous page
+      <div className={styles.pages}>
+        <button className={styles.btnCount} onClick={() => {}}>
+          Previous
         </button>
         <span>Page {currentPage + 1}</span>
-        <button disabled onClick={() => {}}>
-          Next page
+        <button className={styles.btnCount} onClick={() => {}}>
+          Next
         </button>
       </div>
       <hr />
       {selectedPost && <PostDetail post={selectedPost} />}
-    </>
+    </div>
   );
 }

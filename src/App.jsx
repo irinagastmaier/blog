@@ -1,9 +1,10 @@
-//components
-import { Posts } from "./Posts";
 //query
 import { QueryClient, QueryClientProvider } from "react-query";
 //styles
 import "./assets/styles/scss/style.scss";
+//components
+import { Posts } from "./container/Posts";
+import Navbar from "./components/Navbar";
 
 const queryClient = new QueryClient();
 
@@ -12,7 +13,7 @@ function App() {
     // provide React Query client to App
     <QueryClientProvider client={queryClient}>
       <div className='App'>
-        <h1>Blog Posts</h1>
+        <Navbar />
         <Posts />
       </div>
     </QueryClientProvider>
