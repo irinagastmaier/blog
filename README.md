@@ -1,4 +1,4 @@
-# Blog-em Ipsum
+# MyBlog
 
 ### A React App for the Udemy course "React Query: Server State Management for React"
 
