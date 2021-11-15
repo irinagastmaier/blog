@@ -1,3 +1,4 @@
+import { useQuery } from "react-query";
 import styles from "./Posts.module.scss";
 
 async function fetchComments(postId) {
@@ -18,18 +19,32 @@ async function deletePost(postId) {
 async function updatePost(postId) {
   const response = await fetch(
     `https://jsonplaceholder.typicode.com/postId/${postId}`,
-    { method: "PATCH", data: { title: "REACT QUERY FOREVER!!!!" } }
+    { method: "PATCH", data: { title: "REACT QUERY!" } }
   );
   return response.json();
 }
 
 export function PostDetail({ post }) {
-  // replace with useQuery
-  const data = [];
+  const { data, isLoading, error, isError } = useQuery(
+    ["comments", post.id],
+    () => fetchComments(post.id)
+  ); //passing array for the query key and treat as a dependency array --> when key changes, create a new query
+
+  if (isLoading) return <h3>Loading...</h3>;
+
+  if (isError)
+    return (
+      <>
+        <h3>Oops, something went wrong</h3>
+        <p>{error.toString()}</p>
+      </>
+    );
 
   return (
     <div className={styles.container}>
-      <h3 style={{ color: "blue" }}>{post.title}</h3>
+      <h3 style={{ color: "#1d8dbe", paddingBottom: "0.5rem" }}>
+        {post.title}
+      </h3>
       <div>
         <button className={styles.btn}>Delete</button>
         <button className={styles.btn}>Update title</button>

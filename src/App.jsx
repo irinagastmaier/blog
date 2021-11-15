@@ -1,5 +1,6 @@
 //query
 import { QueryClient, QueryClientProvider } from "react-query";
+import { ReactQueryDevtools } from "react-query/devtools";
 //styles
 import "./assets/styles/scss/style.scss";
 //components
@@ -16,6 +17,7 @@ function App() {
         <Navbar />
         <Posts />
       </div>
+      <ReactQueryDevtools />
     </QueryClientProvider>
   );
 }
