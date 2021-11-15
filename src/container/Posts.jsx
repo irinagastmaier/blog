@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { useQuery } from "react-query";
+import { useState, useEffect } from "react";
+import { useQuery, useQueryClient } from "react-query";
 import { PostDetail } from "./PostDetail";
 import styles from "./Posts.module.scss";
 
@@ -16,13 +16,25 @@ export function Posts() {
   const [currentPage, setCurrentPage] = useState(1); //for this API the current page starts at 1
   const [selectedPost, setSelectedPost] = useState(null);
 
+  const queryClient = useQueryClient();
+
   const { data, isError, isLoading, error } = useQuery(
     ["posts", currentPage],
     () => fetchPosts(currentPage),
     {
       staleTime: 2000,
+      keepPreviousData: true,
     }
   ); //useQuery(key, async function, options)
+
+  useEffect(() => {
+    if (currentPage < maxPostPage) {
+      const nextPage = currentPage + 1;
+      queryClient.prefetchQuery(["posts", nextPage], () =>
+        fetchPosts(nextPage)
+      );
+    }
+  }, [currentPage, queryClient]);
 
   if (isLoading) return <h3>Loading...</h3>;
 
