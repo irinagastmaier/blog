@@ -18,7 +18,7 @@ export function Posts() {
 
   const queryClient = useQueryClient();
 
-  const { data, isError, isLoading, error } = useQuery(
+  const { data, isError, error, isLoading } = useQuery(
     ["posts", currentPage],
     () => fetchPosts(currentPage),
     {
@@ -36,7 +36,7 @@ export function Posts() {
     }
   }, [currentPage, queryClient]);
 
-  if (isLoading) return <h3>Loading...</h3>;
+  if (isLoading) return <h3>Loading...</h3>; //show it everytime, doesn't matter if there is data on the cache
 
   if (isError)
     return (
